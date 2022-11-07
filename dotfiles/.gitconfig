@@ -1,0 +1,25 @@
+[alias]
+	co = checkout
+	pf = push --force-with-lease
+	st = status
+[color]
+	ui = auto
+[core]
+	editor = <prompt>
+	filemode = false
+	longpaths = true
+[fetch]
+	prune = true
+[init]
+	defaultbranch = main
+[merge]
+	ff = only
+[pull]
+	rebase = true
+[push]
+	default = current
+[rebase]
+	autosquash = true
+[user]
+	email = <prompt>
+	name = Norman Dankert
