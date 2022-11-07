@@ -1,0 +1,260 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+console_title_template = "{{ .Shell }} in {{ .Folder }}"
+version                = 2.0
+
+[palette]
+   white = "#FFFFFF"
+
+   path-background  = "#FF9248"
+   path-foreground  = "#2D3436"
+   root-background  = "#EF5350"
+   root-foreground  = "#FFFB38"
+   shell-background = "#0077C2"
+   shell-foreground = "p:white"
+
+[[blocks]]
+   alignment = "left"
+   type      = "prompt"
+
+   [[blocks.segments]]
+      type = "shell"
+
+      background      = "p:shell-background"
+      foreground      = "p:shell-foreground"
+      leading_diamond = "\u256D\u2500\uE0B6"
+      style           = "diamond"
+      template        = "{{ .Name }} "
+      [blocks.segments.properties.mapped_shell_names]
+         bash = "\uEBCA"
+         pwsh = "\uEBC7"
+
+   [[blocks.segments]]
+      type = "root"
+
+      background = "p:root-background"
+      foreground = "p:root-foreground"
+      style      = "diamond"
+      template   = "<parentBackground>\uE0B0</> \uEAF2 "
+
+   [[blocks.segments]]
+      type = "path"
+
+      background       = "p:path-background"
+      foreground       = "p:path-foreground"
+      powerline_symbol = "\uE0B0"
+      style            = "powerline"
+      template         = " {{ .Path }} "
+      [blocks.segments.properties]
+         folder_icon           = "\uF07B "
+         folder_separator_icon = " \uE0B1 "
+         home_icon             = "\uF7DD"
+         max_depth             = 2
+         style                 = "agnoster_short"
+         [blocks.segments.properties.mapped_locations]
+            # TODO needs to use variables or be per host
+            # "D:/Projects/GitHub" = "x"
+
+   [[blocks.segments]]
+      type = "git"
+
+      background = "#FFFB38"
+      background_templates = [
+         "{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB95{{ end }}",
+         "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#C5E478{{ end }}",
+         "{{ if gt .Ahead 0 }}#C792EA{{ end }}",
+         "{{ if gt .Behind 0 }}#C792EA{{ end }}",
+      ]
+      foreground = "#011627"
+      powerline_symbol = "\uE0B0"
+      style = "powerline"
+      template = " {{ .UpstreamIcon }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}<#EF5350> \uF046 {{ .Staging.String }}</>{{ end }} "
+      [blocks.segments.properties]
+         branch_icon         = "\uE725 "
+         fetch_status        = true
+         fetch_upstream_icon = true
+
+   [[blocks.segments]]
+      type = "executiontime"
+
+      background       = "#83769C"
+      foreground       = "#FFFFFF"
+      style            = "diamond"
+      template         = " \uFA1E {{ .FormattedMs }} "
+      trailing_diamond = "\uE0B4"
+      [blocks.segments.properties]
+         always_enabled = true
+
+[[blocks]]
+   alignment = "right"
+   type      = "prompt"
+
+   [[blocks.segments]]
+      type = "node"
+
+      background       = "#303030"
+      foreground       = "#3C873A"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uE718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }}"
+      trailing_diamond = "\uE0B4 "
+      [blocks.segments.properties]
+         fetch_package_manager = true
+         npm_icon              = " <#CC3A3A>\uE5FA</> "
+         yarn_icon             = " <#348CBA>\uF61A</>"
+
+   [[blocks.segments]]
+      type = "python"
+
+      background       = "#306998"
+      foreground       = "#FFE873"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uE235 {{ if .Error }}{{ .Error }}{{ else }}{{ if .Venv }}{{ .Venv }} {{ end }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "dotnet"
+
+      background       = "#0E0E0E"
+      foreground       = "#0D6DA8"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uE77F {{ if .Unsupported }}\uF071{{ else }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "go"
+
+      background       = "#FFFFFF"
+      foreground       = "#06AAD5"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uFCD1 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "rust"
+
+      background       = "#F3F0EC"
+      foreground       = "#925837"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uE7A8 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "angular"
+
+      background       = "#FFFFFF"
+      foreground       = "#CE092F"
+      leading_diamond  = " \uE0B6"
+      style            = "diamond"
+      template         = "\uE753 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "nx"
+
+      background       = "#1E293B"
+      foreground       = "#FFFFFF"
+      leading_diamond  = " \uE0B6"
+      style            = "diamond"
+      template         = "{{ if .Error }}{{ .Error }}{{ else }}Nx {{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "ruby"
+
+      background       = "#FFFFFF"
+      foreground       = "#9C1006"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uE791 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "azfunc"
+
+      background       = "#FFFFFF"
+      foreground       = "#5398C2"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uF104<#F5BF45>\uF0E7</>\uF105 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}"
+      trailing_diamond = "\uE0B4 "
+
+   [[blocks.segments]]
+      type = "kubectl"
+
+      background       = "#316CE4"
+      foreground       = "#FFFFFF"
+      leading_diamond  = "\uE0B6"
+      style            = "diamond"
+      template         = "\uFD31 {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}}"
+      trailing_diamond = "\uE0B4"
+
+   [[blocks.segments]]
+      type = "os"
+
+      background      = "#B2BEC3"
+      foreground      = "#222222"
+      leading_diamond = "\uE0B6"
+      style           = "diamond"
+      template        = "{{ if .WSL }}WSL at {{ end }}{{.Icon}} <#40C4FF>\uE0B2</>"
+      [blocks.segments.properties]
+         linux   = "\uE712"
+         macos   = "\uE711"
+         windows = "\uE70F"
+
+   [[blocks.segments]]
+      type = "time"
+
+      background       = "#40C4FF"
+      foreground       = "#FFFFFF"
+      style            = "diamond"
+      template         = " \uF64F {{ .CurrentDate | date .Format }}"
+      trailing_diamond = "\uE0B4"
+      [blocks.segments.properties]
+         time_format = "15:04:05"
+
+[[blocks]]
+   alignment = "left"
+   newline   = true
+   type      = "prompt"
+
+   [[blocks.segments]]
+      type = "text"
+
+      foreground = "#21C7C7"
+      style      = "plain"
+      template   = "\u2570\u2500"
+
+   [[blocks.segments]]
+      type = "exit"
+
+      foreground = "#21C7C7"
+      foreground_templates = [
+         "{{ if gt .Code 0 }}#EF5350{{ end }}",
+      ]
+      style = "plain"
+      template = "\uE285\uFB00 "
+      [blocks.segments.properties]
+         always_enabled = true
+
+         # [secondary_prompt]
+         # TODO
+
+[transient_prompt]
+   background = "transparent"
+   foreground = "#21C7C7"
+   template   = "\u2500\u2500\uE285\uFB00 "
+
+[valid_line]
+   background = "transparent"
+   foreground = "#FFFFFF"
+   template   = "<#E0DEF4,#286983>\uF42E </><#286983,transparent>\uE0B4</> "
+
+[error_line]
+   background = "transparent"
+   foreground = "#FFFFFF"
+   template   = "<#EB6F92,#286983>\uE009 </><#286983,transparent>\uE0B4</> "
