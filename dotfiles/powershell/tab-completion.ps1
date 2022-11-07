@@ -26,3 +26,6 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 		[System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
 	}
 }
+
+# Oh My Posh
+oh-my-posh completion powershell | Out-String | Invoke-Expression
