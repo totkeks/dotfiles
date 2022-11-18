@@ -1,12 +1,7 @@
-#------------------------------------------------------------------------------
-# The Beginning
-#------------------------------------------------------------------------------
 Import-Module ProfileManagement
 Start-LoadingSequence
 
-#------------------------------------------------------------------------------
 # Default shell behavior
-#------------------------------------------------------------------------------
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
@@ -14,18 +9,15 @@ Set-StrictMode -Version Latest
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::InputEncoding = [System.Text.Encoding]::UTF8
 
-# Tell git to not spam stderr with output
+# Stop git from using stderr for output
 $env:GIT_REDIRECT_STDERR = '2>&1'
 Import-Module GitManagement
 
-Set-PSReadLineKeyHandler -Chord Ctrl+w -Function BackwardDeleteWord
-
+# Load submodules
 . powershell/aliases.ps1
 . powershell/tab-completion.ps1
 
-#------------------------------------------------------------------------------
-# The End
-#------------------------------------------------------------------------------
 Stop-LoadingSequence
 
+# Setup prompt
 oh-my-posh init pwsh --config ~/.totkeks.omp.toml | Invoke-Expression
