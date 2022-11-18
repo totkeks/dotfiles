@@ -223,13 +223,6 @@ version                = 2.0
    type      = "prompt"
 
    [[blocks.segments]]
-      type = "text"
-
-      foreground = "#21C7C7"
-      style      = "plain"
-      template   = "\u2570\u2500"
-
-   [[blocks.segments]]
       type = "exit"
 
       foreground = "#21C7C7"
@@ -237,7 +230,7 @@ version                = 2.0
          "{{ if gt .Code 0 }}#EF5350{{ end }}",
       ]
       style = "plain"
-      template = "\uE285\uFB00 "
+      template = "\u2570\uF90C"
       [blocks.segments.properties]
          always_enabled = true
 
@@ -247,14 +240,14 @@ version                = 2.0
 [transient_prompt]
    background = "transparent"
    foreground = "#21C7C7"
-   template   = "\u2500\u2500\uE285\uFB00 "
+   template   = "\u2500\uFB61 "
 
 [valid_line]
    background = "transparent"
-   foreground = "#FFFFFF"
-   template   = "<#E0DEF4,#286983>\uF42E </><#286983,transparent>\uE0B4</> "
+   foreground = "green"
+   template   = "\u2570\uFAE0 "
 
 [error_line]
    background = "transparent"
-   foreground = "#FFFFFF"
-   template   = "<#EB6F92,#286983>\uE009 </><#286983,transparent>\uE0B4</> "
+   foreground = "red"
+   template   = "\u2570\uF659 "
