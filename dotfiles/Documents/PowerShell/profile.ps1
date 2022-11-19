@@ -14,8 +14,9 @@ $env:GIT_REDIRECT_STDERR = '2>&1'
 Import-Module GitManagement
 
 # Load submodules
-. powershell/aliases.ps1
-. powershell/tab-completion.ps1
+Set-Aliases
+Set-KeyBindings
+Set-TabCompletions
 
 Stop-LoadingSequence
 
