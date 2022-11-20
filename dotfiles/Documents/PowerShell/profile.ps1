@@ -17,6 +17,7 @@ Import-Module GitManagement
 Set-Aliases
 Set-KeyBindings
 Set-TabCompletions
+Set-SolarizedDarkColorTheme
 
 Stop-LoadingSequence
 

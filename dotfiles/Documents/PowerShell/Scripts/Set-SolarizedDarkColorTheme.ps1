@@ -4,7 +4,7 @@
 # Highlighted text is base1 on base02
 #
 # Solarized Hex     PSStyle       Dark theme
-# --------- ------- ------------- ------------------------
+# --------- ------- ------------- ------------------------------------------
 # base03    #002B36 BrightBlack   background
 # base02    #073642 Black         background highlights
 # base01    #586E75 BrightGreen   comments / secondary content
@@ -23,24 +23,24 @@
 # green     #859900 Green         Tetrad
 
 Set-PSReadLineOption -Colors @{
-	"Command"            = $PSStyle.Foreground.Blue
-	"Comment"            = $PSStyle.Foreground.BrightGreen
-	"ContinuationPrompt" = $PSStyle.Foreground.BrightGreen
-	"Default"            = $PSStyle.Foreground.BrightBlue
-	"Emphasis"           = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
-	"Error"              = $PSStyle.Foreground.Red
-	"InlinePrediction"   = $PSStyle.Foreground.BrightGreen
-	"Keyword"            = $PSStyle.Foreground.Green
+	"Command"                = $PSStyle.Foreground.Blue
+	"Comment"                = $PSStyle.Foreground.BrightGreen
+	"ContinuationPrompt"     = $PSStyle.Foreground.BrightGreen
+	"Default"                = $PSStyle.Foreground.BrightBlue
+	"Emphasis"               = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
+	"Error"                  = $PSStyle.Foreground.Red
+	"InlinePrediction"       = $PSStyle.Foreground.BrightGreen
+	"Keyword"                = $PSStyle.Foreground.Green
 	# "ListPrediction"         = $PSStyle.Foreground.BrightBlue
-	# "ListPredictionSelected" = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
-	"Member"             = $PSStyle.Foreground.BrightCyan
-	"Number"             = $PSStyle.Foreground.BrightCyan
-	"Operator"           = $PSStyle.Foreground.BrightGreen
-	"Parameter"          = $PSStyle.Foreground.BrightGreen
-	"Selection"          = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
-	"String"             = $PSSTyle.Foreground.Cyan
-	"Type"               = $PSStyle.Bold + $PSStyle.Foreground.BrightCyan
-	"Variable"           = $PSStyle.Foreground.Blue
+	"ListPredictionSelected" = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
+	"Member"                 = $PSStyle.Foreground.BrightCyan
+	"Number"                 = $PSStyle.Foreground.BrightCyan
+	"Operator"               = $PSStyle.Foreground.BrightGreen
+	"Parameter"              = $PSStyle.Foreground.BrightGreen
+	"Selection"              = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
+	"String"                 = $PSSTyle.Foreground.Cyan
+	"Type"                   = $PSStyle.Bold + $PSStyle.Foreground.BrightCyan
+	"Variable"               = $PSStyle.Foreground.Blue
 }
 
 # $PSStyle.Formatting.Debug
