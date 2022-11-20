@@ -1,6 +1,17 @@
 <!--
 	https://gist.github.com/kuntau/f61059045df331e35f26
 	Use this file during Windows installation
+
+	Find the index for Windows 11 setup
+	> Dism /Get-WimInfo /WimFile:E:\Sources\boot.wim
+
+	Mount the image
+	> Dism /Mount-Image /ImageFile:e:\Sources\boot.wim /Index:2 /MountDir:C:\Mount
+
+	> Copy this file to Windows/Panther folder (create if not existing)
+
+	Unmount and save the image
+	> dism /unmount-image /mountdir:c:\mount /commit
 -->
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
