@@ -1,6 +1,3 @@
-Import-Module ProfileManagement
-Start-LoadingSequence
-
 # Default shell behavior
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
@@ -14,12 +11,7 @@ $env:GIT_REDIRECT_STDERR = '2>&1'
 Import-Module GitManagement
 
 # Load submodules
-Set-Aliases
-Set-KeyBindings
-Set-TabCompletions
-Set-SolarizedDarkColorTheme
-
-Stop-LoadingSequence
+Get-ChildItem (Join-Path $PSScriptRoot "Profile") *.ps1 | ForEach-Object { . $_.FullName }
 
 # Setup prompt
 oh-my-posh init pwsh --config ~/.totkeks.omp.toml | Invoke-Expression
