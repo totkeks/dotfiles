@@ -1,5 +1,5 @@
-$username = $IsWindows ? ([wmi] "win32_userAccount.Domain='$env:USERDOMAIN',Name='$env:USERNAME'").FullName : $env:USERNAME
-$computername = hostname
+$username = $IsWindows ? (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\SessionData\" | Get-ItemProperty | Where-Object LoggedOnUser -Like "*$($env:USERNAME)" | Select-Object -First 1 -ExpandProperty LoggedOnDisplayName) : $env:USERNAME
+$computername = $env:COMPUTERNAME
 $os = $PSVersionTable.OS
 $psversion = $PSVersionTable.PSVersion
 
