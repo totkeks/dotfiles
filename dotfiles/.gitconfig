@@ -1,32 +1,45 @@
 [alias]
-	co = checkout
-	pf = push --force-with-lease
-	st = status
+co = checkout
+pf = push --force-with-lease
+ro = reset --hard @{u}
+st = status
+
 [color]
-	ui = auto
+ui = auto
+
 [core]
-	editor = code --wait
-	filemode = false
-	longpaths = true
+editor = code --wait
+filemode = false
+longpaths = true
+
 [diff]
-	tool = vscode
+tool = vscode
+
 [difftool "vscode"]
-	cmd = code --wait --diff $LOCAL $REMOTE
+cmd = code --wait --diff $LOCAL $REMOTE
+
 [fetch]
-	prune = true
+prune = true
+
 [init]
-	defaultbranch = main
+defaultbranch = main
+
 [merge]
-	ff = only
-	tool = vscode
+ff = only
+tool = vscode
+
 [mergetool "vscode"]
-	cmd = code --wait $MERGED
+cmd = code --wait $MERGED
+
 [pull]
-	rebase = true
+rebase = true
+
 [push]
-	default = current
+default = current
+
 [rebase]
-	autosquash = true
+autosquash = true
+
 [user]
-	email = <<email>>
-	name = Norman Dankert
+email = <<email>>
+name = Norman Dankert
