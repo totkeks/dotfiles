@@ -6,7 +6,7 @@ $noToAll = $false
 
 $dotfiles = "dotfiles"
 $configPath = "$HOME/.config/dotfiles.json"
-$pattern = [Regex]"<<(?<variable>\w+)>>"
+$variablePattern = [Regex]"<<(?<variable>\w+)>>"
 $basePath = [System.IO.Path]::Combine($PSScriptRoot, $dotfiles)
 $files = Get-ChildItem -Recurse -File $dotfiles
 
@@ -26,7 +26,7 @@ foreach ($file in $files) {
 	}
 
 	$content = Get-Content $file.FullName -Raw
-	$allMatches = $pattern.Matches($content)
+	$allMatches = $variablePattern.Matches($content)
 
 	if ($null -ne $allMatches) {
 		foreach ($match in $allMatches) {
