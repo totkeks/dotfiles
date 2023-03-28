@@ -1,4 +1,4 @@
-$username = $IsWindows ? (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\SessionData\" | Get-ItemProperty | Where-Object LoggedOnUser -Like "*$($env:USERNAME)" | Select-Object -First 1 -ExpandProperty LoggedOnDisplayName) : $env:USERNAME
+$username = $IsWindows ? (Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\SessionData\" | Get-ItemProperty | Where-Object { $_.psobject.Properties["LoggedOnUser"] -Like "*$($env:USERNAME)" } | Select-Object -First 1 -ExpandProperty LoggedOnDisplayName) : $env:USERNAME
 $computername = $env:COMPUTERNAME
 $os = $PSVersionTable.OS
 $psversion = $PSVersionTable.PSVersion
