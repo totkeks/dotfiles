@@ -48,3 +48,11 @@ foreach ($file in $files) {
 }
 
 Set-Content $configPath ($config | ConvertTo-Json)
+
+# Add scripts folder to PATH (if not present) and refresh
+$PATH = [Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::User)
+$scriptsPath = "$(Split-Path $profile)\Scripts"
+if ( $PATH -notlike "*" + $scriptsPath + "*" ) {
+	[Environment]::SetEnvironmentVariable("PATH", "$PATH;$scriptsPath", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("PATH", "$PATH;$scriptsPath", [System.EnvironmentVariableTarget]::Process)
+}
