@@ -7,19 +7,19 @@ param (
 
 $TempFile = [System.IO.Path]::GetTempFileName()
 $TempDirectory = Join-Path $Env:Temp $(New-Guid)
-Invoke-WebRequest -Uri "$DownloadUrl$FontName.zip" -OutFile $TempFile
-Expand-Archive -LiteralPath $TempFile -DestinationPath $TempDirectory
 
-$fonts = $null
-foreach ($fontFile in (Get-ChildItem $TempDirectory -Recurse -Include "*.ttf", "*.otf")) {
-	if ($PSCmdlet.ShouldProcess($fontFile.Name, "Install Font")) {
-		if (!$fonts) {
-			$shellApp = New-Object -ComObject shell.application
-			$fonts = $shellApp.NameSpace(0x14)
+try {
+	Invoke-WebRequest -Uri "$DownloadUrl$FontName.zip" -OutFile $TempFile
+	Expand-Archive -LiteralPath $TempFile -DestinationPath $TempDirectory
+
+	$fonts = (New-Object -ComObject shell.application).NameSpace(0x14)
+	foreach ($fontFile in (Get-ChildItem $TempDirectory -Recurse -Include "*.ttf", "*.otf")) {
+		if ($PSCmdlet.ShouldProcess($fontFile.Name, "Install font")) {
+			$fonts.CopyHere($fontFile.FullName)
 		}
-		$fonts.CopyHere($fontFile.FullName)
 	}
 }
-
-Remove-Item $TempFile
-Remove-Item $TempDirectory -Recurse
+finally {
+	Remove-Item $TempFile
+	Remove-Item $TempDirectory -Recurse
+}
