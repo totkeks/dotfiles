@@ -27,7 +27,7 @@ Set-PSReadLineOption -Colors @{
 	"Comment"                = $PSStyle.Foreground.BrightGreen
 	"ContinuationPrompt"     = $PSStyle.Foreground.BrightGreen
 	"Default"                = $PSStyle.Foreground.BrightBlue
-	"Emphasis"               = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
+	"Emphasis"               = $PSStyle.Bold + $PSStyle.Foreground.Green
 	"Error"                  = $PSStyle.Foreground.Red
 	"InlinePrediction"       = $PSStyle.Foreground.BrightGreen
 	"Keyword"                = $PSStyle.Foreground.Green
@@ -38,7 +38,7 @@ Set-PSReadLineOption -Colors @{
 	"Operator"               = $PSStyle.Foreground.BrightGreen
 	"Parameter"              = $PSStyle.Foreground.BrightGreen
 	"Selection"              = $PSStyle.Background.Black + $PSStyle.Foreground.BrightCyan
-	"String"                 = $PSSTyle.Foreground.Cyan
+	"String"                 = $PSStyle.Foreground.Cyan
 	"Type"                   = $PSStyle.Bold + $PSStyle.Foreground.BrightCyan
 	"Variable"               = $PSStyle.Foreground.Blue
 }
@@ -51,7 +51,7 @@ Set-PSReadLineOption -Colors @{
 # $PSStyle.Formatting.TableHeader
 # $PSStyle.Formatting.FormatAccent (Format-List)
 
-# $PSStyle.FileInfo.Directory
+$PSStyle.FileInfo.Directory = $PSStyle.Foreground.Blue
 # $PSStyle.FileInfo.Executable
 # $PSStyle.FileInfo.SymbolicLink
 # $PSStyle.FileInfo.Extension (array of file extensions)
