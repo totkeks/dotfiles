@@ -48,7 +48,7 @@ version                = 2.0
       [blocks.segments.properties]
          folder_icon           = "\uF07B "
          folder_separator_icon = " \uE0B1 "
-         home_icon             = "\uF7DD"
+         home_icon             = "\U000F02DE"
          max_depth             = 2
          style                 = "agnoster_short"
          [blocks.segments.properties.mapped_locations]
@@ -80,7 +80,7 @@ version                = 2.0
       background       = "#83769C"
       foreground       = "#FFFFFF"
       style            = "diamond"
-      template         = " \uFA1E {{ .FormattedMs }} "
+      template         = " \U000F051F {{ .FormattedMs }} "
       trailing_diamond = "\uE0B4"
       [blocks.segments.properties]
          always_enabled = true
@@ -212,7 +212,7 @@ version                = 2.0
       background       = "#40C4FF"
       foreground       = "#FFFFFF"
       style            = "diamond"
-      template         = " \uF64F {{ .CurrentDate | date .Format }}"
+      template         = " \U000F0954 {{ .CurrentDate | date .Format }}"
       trailing_diamond = "\uE0B4"
       [blocks.segments.properties]
          time_format = "15:04:05"
@@ -230,7 +230,7 @@ version                = 2.0
          "{{ if gt .Code 0 }}#EF5350{{ end }}",
       ]
       style = "plain"
-      template = "\u2570\uF90C"
+      template = "\u2570\U000F040D"
       [blocks.segments.properties]
          always_enabled = true
 
@@ -240,14 +240,14 @@ version                = 2.0
 [transient_prompt]
    background = "transparent"
    foreground = "#21C7C7"
-   template   = "\u2500\uFB61 "
+   template   = "\u2500\U000F0662 "
 
 [valid_line]
    background = "transparent"
    foreground = "green"
-   template   = "\u2570\uFAE0 "
+   template   = "\u2570\U000F05E1 "
 
 [error_line]
    background = "transparent"
    foreground = "red"
-   template   = "\u2570\uF659 "
+   template   = "\u2570\U000F015A "
