@@ -4,6 +4,8 @@ using namespace System.Management.Automation
 [SuppressMessageAttribute('PSReviewUnusedParameter', 'wordToComplete')]
 param()
 
+Import-Module CompletionPredictor
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
 
 Import-Module posh-git
