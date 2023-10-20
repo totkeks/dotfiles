@@ -1,3 +1,20 @@
+<#
+.SYNOPSIS
+	Installs a Nerd Font to the system.
+
+.DESCRIPTION
+	This script installs a Nerd Font to the system by downloading the font and installing it to the user's font directory.
+
+.PARAMETER FontName
+	The name of the font to install. Check https://github.com/ryanoasis/nerd-fonts/releases for a list of available fonts.
+
+.PARAMETER DownloadUrl
+	The URL to download the font from. Defaults to the latest release of the Nerd Fonts repository.
+
+.EXAMPLE
+	Install-NerdFont -FontName CascadiaCode
+#>
+
 [CmdletBinding(SupportsShouldProcess)]
 param (
 	[Parameter(Mandatory)]
