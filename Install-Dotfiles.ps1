@@ -56,3 +56,15 @@ if ( $PATH -notlike "*" + $scriptsPath + "*" ) {
 	[Environment]::SetEnvironmentVariable("PATH", "$PATH;$scriptsPath", [System.EnvironmentVariableTarget]::User)
 	[Environment]::SetEnvironmentVariable("PATH", "$PATH;$scriptsPath", [System.EnvironmentVariableTarget]::Process)
 }
+
+# Configure dev drive caches
+$devDrive = (Get-Volume | Where-Object { $_.FileSystem -eq "ReFS" })?.DriveLetter
+if ($devDrive) {
+	Write-Output "Configuring dev drive caches"
+	[Environment]::SetEnvironmentVariable("npm_config_cache", "${devDrive}:\packages\npm", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("NUGET_PACKAGES", "${devDrive}:\packages\nuget", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("VCPKG_DEFAULT_BINARY_CACHE", "${devDrive}:\packages\vcpkg", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("PIP_CACHE_DIR", "${devDrive}:\packages\pip", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("CARGO_HOME", "${devDrive}:\packages\cargo", [System.EnvironmentVariableTarget]::User)
+	[Environment]::SetEnvironmentVariable("MAVEN_OPTS", "-Dmaven.repo.local=${devDrive}:\packages\maven", [System.EnvironmentVariableTarget]::User)
+}
