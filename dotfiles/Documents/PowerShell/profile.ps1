@@ -9,6 +9,7 @@ Set-StrictMode -Version Latest
 # Stop git from using stderr for output
 $env:GIT_REDIRECT_STDERR = '2>&1'
 Import-Module GitManagement
+Import-Module Terminal-Icons
 
 # Load submodules
 Get-ChildItem (Join-Path $PSScriptRoot "Profile") *.ps1 | ForEach-Object { . $_.FullName }
