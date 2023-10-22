@@ -1,4 +1,4 @@
-# Default shell behavior
+# Set default shell behavior
 $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
@@ -8,7 +8,9 @@ Set-StrictMode -Version Latest
 
 # Stop git from using stderr for output
 $env:GIT_REDIRECT_STDERR = '2>&1'
+
 Import-Module GitManagement
+Set-GitBaseDirectory "<<gitBaseDirectory>>"
 Import-Module Terminal-Icons
 
 # Load submodules
