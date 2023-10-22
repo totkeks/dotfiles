@@ -230,7 +230,7 @@ version                = 2.0
          "{{ if gt .Code 0 }}#EF5350{{ end }}",
       ]
       style = "plain"
-      template = "\u2570\U000F040D"
+      template = "\u2570\U000F040D "
       [blocks.segments.properties]
          always_enabled = true
 
