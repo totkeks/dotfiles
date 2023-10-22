@@ -68,3 +68,17 @@ if ($devDrive) {
 	[Environment]::SetEnvironmentVariable("CARGO_HOME", "${devDrive}:\packages\cargo", [System.EnvironmentVariableTarget]::User)
 	[Environment]::SetEnvironmentVariable("MAVEN_OPTS", "-Dmaven.repo.local=${devDrive}:\packages\maven", [System.EnvironmentVariableTarget]::User)
 }
+
+# Install required modules
+$modules = @(
+	"posh-git",
+	"Terminal-Icons",
+	"GitManagement"
+)
+
+foreach ($module in $modules) {
+	if (-not (Get-Module $module -ListAvailable)) {
+		Write-Output "Installing module $module"
+		Install-Module $module -Scope CurrentUser -Force
+	}
+}
