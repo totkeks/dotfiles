@@ -223,7 +223,7 @@ version                = 2.0
    type      = "prompt"
 
    [[blocks.segments]]
-      type = "exit"
+      type = "status"
 
       foreground = "#21C7C7"
       foreground_templates = [
