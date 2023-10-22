@@ -38,7 +38,7 @@ foreach ($file in $files) {
 				$config | Add-Member -MemberType NoteProperty -Name $varName -Value $varValue
 			}
 
-			Write-Output "Replacing '$varName' with '$varValue"
+			Write-Output "Replacing '$varName' with '$varValue'"
 			$content = ([Regex]"<<$varName>>").Replace($content, $varValue, 1)
 		}
 	}
