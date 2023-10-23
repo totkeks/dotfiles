@@ -1,0 +1,6 @@
+{
+	"scripts": {
+		"yarn:setup": "yarn dlx @yarnpkg/sdks vscode",
+		"yarn:update": "yarn set version latest"
+	}
+}
