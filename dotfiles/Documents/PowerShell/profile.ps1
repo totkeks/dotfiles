@@ -1,5 +1,5 @@
 # Set default shell behavior
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 # Properly handle unicode in terminals
@@ -14,7 +14,7 @@ Set-GitBaseDirectory "<<gitBaseDirectory>>"
 Import-Module Terminal-Icons
 
 # Load submodules
-Get-ChildItem (Join-Path $PSScriptRoot "Profile") *.ps1 | ForEach-Object { . $_.FullName }
+Get-ChildItem (Join-Path $PSScriptRoot Profile) *.ps1 | ForEach-Object { . $_.FullName }
 
 Write-Greeting
 
