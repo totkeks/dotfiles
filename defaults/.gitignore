@@ -1,0 +1,25 @@
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Yarn v2+
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+# With zero install
+!.yarn/cache
+# Without zero install
+#.pnp.*
+
+# Node.JS
+node_modules/
+
+# Local Netlify folder
+.netlify/
