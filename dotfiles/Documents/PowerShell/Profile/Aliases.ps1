@@ -24,6 +24,3 @@ function open {
 	)
 	Invoke-Item $Path
 }
-
-# Copilot aliases for GitHub CLI
-gh copilot alias pwsh | Out-String | Invoke-Expression
