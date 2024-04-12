@@ -9,9 +9,6 @@ Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
 
 Import-Module posh-git
-# Import-Module NPMTabCompletion
-# Import-Module DockerCompletion
-# Import-Module DockerComposeCompletion
 
 # .NET CLI
 Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
@@ -33,3 +30,12 @@ Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 
 # Oh My Posh
 oh-my-posh completion powershell | Out-String | Invoke-Expression
+
+# GitHub CLI
+gh completion -s powershell | Out-String | Invoke-Expression
+
+# Podman, with workaround for https://github.com/containers/podman/issues/15527
+(podman completion powershell | Out-String) -replace "podman.exe", "podman" | Invoke-Expression
+
+# Volta
+volta completions powershell | Out-String | Invoke-Expression
