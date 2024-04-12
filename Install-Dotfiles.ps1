@@ -77,8 +77,8 @@ $modules = @(
 )
 
 foreach ($module in $modules) {
-	if (-not (Get-Module $module -ListAvailable)) {
+	if (-not (Get-InstalledPSResource $module)) {
 		Write-Output "Installing module $module"
-		Install-Module $module -Scope CurrentUser -Force
+		Install-PSResource $module -Scope CurrentUser -Force
 	}
 }
