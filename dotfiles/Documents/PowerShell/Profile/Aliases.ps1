@@ -18,7 +18,7 @@
 	open C:\Users\Username\Documents
 	This command will open the 'Documents' folder in File Explorer.
 #>
-Function open {
+function open {
 	param (
 		[string]$Path = "."
 	)

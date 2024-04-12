@@ -22,7 +22,7 @@ Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
 	}
 }
 
-# winget
+# Windows Package Manager
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
 	param($wordToComplete, $commandAst, $cursorPosition)
 
