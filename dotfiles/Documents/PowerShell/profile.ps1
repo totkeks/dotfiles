@@ -9,7 +9,7 @@ Set-StrictMode -Version Latest
 # Stop git from using stderr for output
 $env:GIT_REDIRECT_STDERR = '2>&1'
 
-Import-Module GitManagement
+Import-Module totkeks.GitManagement
 Set-GitBaseDirectory "<<gitBaseDirectory>>"
 Import-Module Terminal-Icons
 
