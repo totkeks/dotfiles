@@ -73,7 +73,9 @@ if ($devDrive) {
 $modules = @(
 	"posh-git",
 	"Terminal-Icons",
-	"GitManagement"
+	"totkeks.GitManagement",
+	"VirtualDesktop",
+	"CompletionPredictor"
 )
 
 foreach ($module in $modules) {
