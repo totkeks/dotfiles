@@ -52,8 +52,9 @@ version                = 2
          max_depth             = 2
          style                 = "agnoster_short"
          [blocks.segments.properties.mapped_locations]
-            # TODO needs to use variables or be per host
-            # "D:/Projects/GitHub" = "x"
+            "E:\\GitHub\\*" = "\uF408 "
+				"E:\\Bitbucket\\*" = "\ue703 "
+				"E:\\Azure\\*" = "\uebe8 "
 
    [[blocks.segments]]
       type = "git"
