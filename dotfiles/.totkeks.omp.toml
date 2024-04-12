@@ -52,9 +52,9 @@ version                = 2
          max_depth             = 2
          style                 = "agnoster_short"
          [blocks.segments.properties.mapped_locations]
-            "E:\\GitHub\\*" = "\uF408 "
-				"E:\\Bitbucket\\*" = "\ue703 "
-				"E:\\Azure\\*" = "\uebe8 "
+            "{{ .Env.GitBaseDirectory }}Azure/*"     = "\uebe8 "
+            "{{ .Env.GitBaseDirectory }}Bitbucket/*" = "\ue703 "
+            "{{ .Env.GitBaseDirectory }}GitHub/*"    = "\uF408 "
 
    [[blocks.segments]]
       type = "git"

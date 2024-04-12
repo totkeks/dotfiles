@@ -19,4 +19,5 @@ Get-ChildItem (Join-Path $PSScriptRoot Profile) *.ps1 | ForEach-Object { . $_.Fu
 Write-Greeting
 
 # Setup prompt
+$env:GitBaseDirectory = Get-GitBaseDirectory
 oh-my-posh init pwsh --config ~/.totkeks.omp.toml | Invoke-Expression
