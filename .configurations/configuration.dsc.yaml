@@ -12,3 +12,13 @@ properties:
         Name: PsIni
         Repository: PSGallery
         Ensure: Present
+
+    - resource: PowerShellGet/PSModule
+      id: DotfileManagement
+      directives:
+        description: Install totkeks.DotfileManagement module from PSGallery
+        allowPrerelease: true
+      settings:
+        Name: totkeks.DotfileManagement
+        Repository: PSGallery
+        Ensure: Present
