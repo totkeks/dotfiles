@@ -1,5 +1,6 @@
 # Set default shell behavior
 $ErrorActionPreference = 'Stop'
+$InformationPreference = 'Continue'
 Set-StrictMode -Version Latest
 
 # Properly handle unicode in terminals
