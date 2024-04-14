@@ -19,10 +19,10 @@ function Merge-Path {
 
 	$merged = @()
 	foreach ($path in $Paths) {
-		$merged += $path -split ';'
+		$merged += $path -split [IO.Path]::PathSeparator
 	}
 
-	($merged | Select-Object -Unique) -join ';'
+	($merged | Select-Object -Unique) -join [IO.Path]::PathSeparator
 }
 
 function Update-EnvironmentVariable {
