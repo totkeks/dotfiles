@@ -8,9 +8,11 @@ st = status
 ui = auto
 
 [core]
+autocrlf = false
 editor = code --wait
 filemode = false
 longpaths = true
+refFormat = reftable
 
 [diff]
 tool = vscode
@@ -30,6 +32,7 @@ tool = vscode
 
 [mergetool "vscode"]
 cmd = code --wait $MERGED
+conflictstyle = diff3
 
 [pull]
 rebase = true
