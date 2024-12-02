@@ -34,7 +34,7 @@ function UpdateOutdatedModules {
 
 		foreach ($module in $availableUpdates) {
 			if ($PSCmdlet.ShouldContinue("Update module $($module.Name) from $($module.InstalledVersions) to $($module.LatestVersion)?", "Update-PSResource", [ref]$yesToAll, [ref]$noToAll)) {
-				Update-PSResource -Name $update.Name -Prerelease
+				Update-PSResource -Name $module.Name -Prerelease
 			}
 		}
 	}
