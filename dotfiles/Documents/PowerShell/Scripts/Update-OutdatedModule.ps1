@@ -48,14 +48,14 @@ function FindOlderVersions {
 		Group-Object -Property Name |
 		ForEach-Object { [PSCustomObject]@{
 				Name = $_.Name
-				Versions = @($_.Group.Version)
+				Versions = @($_.Group.Version | Sort-Object -Descending)
 			} }
 
 	foreach ($module in $installedModules) {
 		if ($module.Versions.Count -gt 1) {
 			[PSCustomObject]@{
 				Name = $module.Name
-				LatestVersion = $module.Versions | Select-Object -First 1
+				LatestVersion = $module.Versions[0]
 				OldVersions = @($module.Versions | Select-Object -Skip 1)
 			}
 		}
