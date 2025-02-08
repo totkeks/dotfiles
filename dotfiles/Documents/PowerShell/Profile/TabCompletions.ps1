@@ -8,41 +8,67 @@ Import-Module CompletionPredictor
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
 
-# .NET CLI
-Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
-	param($wordToComplete, $commandAst,	$cursorPosition)
+$Flags = [System.Reflection.BindingFlags]'Instance, NonPublic'
+$Context = $ExecutionContext.GetType().GetField('_context', $Flags).GetValue($ExecutionContext)
+$NativeProp = $Context.GetType().GetProperty('NativeArgumentCompleters', $Flags)
 
-	dotnet complete --position $cursorPosition "$commandAst" | ForEach-Object {
-		[CompletionResult]::new($_, $_, 'ParameterValue', $_)
+function Register-LazyCompleter($CommandName, $CompletionScript) {
+	$Context = $script:Context
+	$NativeProp = $script:NativeProp
+
+	Register-ArgumentCompleter -CommandName $CommandName -ScriptBlock {
+		try {
+			. $CompletionScript
+		}
+		catch {
+			throw "Failed to run the autocompleter for '$CommandName'"
+		}
+		$Completer = $NativeProp.GetValue($Context)[$CommandName]
+		return & $Completer @Args
+	}.GetNewClosure()
+}
+
+Register-LazyCompleter dotnet {
+	Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+		param($wordToComplete, $commandAst,	$cursorPosition)
+
+		dotnet complete --position $cursorPosition "$commandAst" | ForEach-Object {
+			[CompletionResult]::new($_, $_, 'ParameterValue', $_)
+		}
 	}
 }
 
-# Windows Package Manager
-Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
-	param($wordToComplete, $commandAst, $cursorPosition)
-
-	winget complete --word "$wordToComplete" --commandline "$commandAst" --position $cursorPosition | ForEach-Object {
-		[CompletionResult]::new($_, $_, 'ParameterValue', $_)
-	}
-}
-
-# Lazy-load additional completions that require external tools
-Register-EngineEvent -SourceIdentifier PowerShell.OnIdle -Action {
-	# Git (TODO reduce to just completions, without the prompt features)
-	Import-Module posh-git
-
-	# Oh My Posh
-	oh-my-posh completion powershell | Out-String | Invoke-Expression
-
-	# GitHub CLI
+Register-LazyCompleter gh {
 	gh completion -s powershell | Out-String | Invoke-Expression
+}
 
+Register-LazyCompleter git {
+	Import-Module posh-git
+}
+
+Register-LazyCompleter oh-my-posh {
+	oh-my-posh completion powershell | Out-String | Invoke-Expression
+}
+
+Register-LazyCompleter podman {
 	# Podman, with workaround for https://github.com/containers/podman/issues/15527
-	(podman completion powershell | Out-String) -replace "podman.exe", "podman" | Invoke-Expression
+	(podman completion powershell | Out-String) -replace 'podman.exe', 'podman' | Invoke-Expression
+}
 
-	# Volta
+Register-LazyCompleter uv {
+	uv generate-shell-completion powershell | Out-String | Invoke-Expression
+}
+
+Register-LazyCompleter volta {
 	volta completions powershell | Out-String | Invoke-Expression
+}
 
-	# Unregister the event after the completions have been loaded
-	Unregister-Event -SourceIdentifier PowerShell.OnIdle
-} | Out-Null
+Register-LazyCompleter winget {
+	Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
+		param($wordToComplete, $commandAst, $cursorPosition)
+
+		winget complete --word "$wordToComplete" --commandline "$commandAst" --position $cursorPosition | ForEach-Object {
+			[CompletionResult]::new($_, $_, 'ParameterValue', $_)
+		}
+	}
+}
