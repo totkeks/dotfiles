@@ -13,7 +13,7 @@ function FindAvailableUpdates {
 			} }
 
 	foreach ($module in $installedModules) {
-		$latestVersion = (Find-Module $module.Name -AllowPrerelease |
+		$latestVersion = (Find-PSResource $module.Name -Prerelease |
 				Sort-Object -Property Version -Descending |
 				Select-Object -First 1).Version
 
@@ -29,17 +29,17 @@ function FindAvailableUpdates {
 
 function UpdateOutdatedModules {
 	if ($availableUpdates = FindAvailableUpdates) {
-		Write-Output "Available updates:"
+		Write-Output 'Available updates:'
 		$availableUpdates | Format-Table -AutoSize
 
 		foreach ($module in $availableUpdates) {
-			if ($PSCmdlet.ShouldContinue("Update module $($module.Name) from $($module.InstalledVersions) to $($module.LatestVersion)?", "Update-PSResource", [ref]$yesToAll, [ref]$noToAll)) {
+			if ($PSCmdlet.ShouldContinue("Update module $($module.Name) from $($module.InstalledVersions) to $($module.LatestVersion)?", 'Update-PSResource', [ref]$yesToAll, [ref]$noToAll)) {
 				Update-PSResource -Name $module.Name -Prerelease
 			}
 		}
 	}
 	else {
-		Write-Output "All installed modules are up to date."
+		Write-Output 'All installed modules are up to date.'
 	}
 }
 
@@ -64,19 +64,19 @@ function FindOlderVersions {
 
 function RemoveOlderVersions {
 	if ($olderVersions = FindOlderVersions) {
-		Write-Output "Older versions:"
+		Write-Output 'Older versions:'
 		$olderVersions | Format-Table -AutoSize
 
 		foreach ($module in $olderVersions) {
 			foreach ($version in $module.OldVersions) {
-				if ($PSCmdlet.ShouldContinue("Remove version $($version) of module $($module.Name)?", "Uninstall-PSResource", [ref]$yesToAll, [ref]$noToAll)) {
+				if ($PSCmdlet.ShouldContinue("Remove version $($version) of module $($module.Name)?", 'Uninstall-PSResource', [ref]$yesToAll, [ref]$noToAll)) {
 					Uninstall-PSResource -Name $module.Name -Version $version
 				}
 			}
 		}
 	}
 	else {
-		Write-Output "No older versions of installed modules found."
+		Write-Output 'No older versions of installed modules found.'
 	}
 }
 
