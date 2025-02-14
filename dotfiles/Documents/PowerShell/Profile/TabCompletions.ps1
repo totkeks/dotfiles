@@ -8,6 +8,7 @@ Import-Module CompletionPredictor
 Set-PSReadLineOption -PredictionSource HistoryAndPlugin
 Set-PSReadLineOption -PredictionViewStyle ListView
 
+# https://github.com/PowerShell/PowerShell/issues/17283#issuecomment-2645841624
 $Flags = [System.Reflection.BindingFlags]'Instance, NonPublic'
 $Context = $ExecutionContext.GetType().GetField('_context', $Flags).GetValue($ExecutionContext)
 $NativeProp = $Context.GetType().GetProperty('NativeArgumentCompleters', $Flags)
