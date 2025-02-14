@@ -20,7 +20,7 @@
 #>
 function open {
 	param (
-		[string]$Path = "."
+		[string]$Path = '.'
 	)
 	Invoke-Item $Path
 }

@@ -20,7 +20,7 @@ param (
 )
 
 if (-not (Test-Path $Path -PathType Leaf)) {
-	Write-Error "Invalid gitconfig path"
+	Write-Error 'Invalid gitconfig path'
 	exit
 }
 

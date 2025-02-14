@@ -1,0 +1,328 @@
+"$schema" = 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json'
+
+version = 3
+
+console_title_template = '{{ .Shell }} in {{ .Folder }}'
+final_space            = true
+shell_integration      = true
+
+[palette]
+	blue    = 'blue'
+	cyan    = 'cyan'
+	green   = 'green'
+	magenta = 'magenta'
+	orange  = 'lightRed'
+	red     = 'red'
+	violet  = 'lightMagenta'
+	yellow  = 'yellow'
+
+	emphasis    = 'lightCyan'
+	emphasis-bg = 'black'
+	primary     = 'lightBlue'
+	primary-bg  = 'darkGray'
+	secondary   = 'lightGreen'
+
+	debug   = 'p:orange'
+	error   = 'p:red'
+	success = 'p:green'
+
+	last-cmd    = 'p:emphasis'
+	last-cmd-bg = 'p:emphasis-bg'
+
+	dotnet       = '#512BD4'
+	golang       = '#00ADD8'
+	golang-error = '#CE3262'
+	node         = '#5FA04E'
+	python       = '#3572A5'
+	rust         = '#DEA584'
+
+	git      = '#011627'
+	git-bg   = '#FFD369'
+	os       = 'p:shell'
+	os-bg    = 'p:shell-bg'
+	path     = '#2D3436'
+	path-bg  = '#FF9248'
+	pipe     = 'p:shell-bg'
+	root     = '#FFFB38'
+	root-bg  = '#EF5350'
+	shell    = '#FFFFFF'
+	shell-bg = '#0077C2'
+
+[var]
+	FirstLine  = '╭─'
+	LastLine   = '╰'
+	MiddleLine = '   '
+
+	Error   = ''
+	Success = '󰗠'
+
+[valid_line]
+	background = 'transparent'
+	foreground = 'p:success'
+	template   = '{{ .Var.LastLine }}{{ .Var.Success }} '
+
+[error_line]
+	background = 'transparent'
+	foreground = 'p:error'
+	template   = '{{ .Var.LastLine }}{{ .Var.Error }} '
+
+[secondary_prompt]
+	background = 'p:transparent'
+	foreground = 'p:secondary'
+	template   = '󰇙 '
+
+[debug_prompt]
+	background = 'p:transparent'
+	foreground = 'p:debug'
+	template   = ' '
+
+[transient_prompt]
+	background = 'p:last-cmd-bg'
+	foreground = 'p:last-cmd'
+	template = """\
+		{{ if gt .PromptCount 1 }}\
+			<background,transparent>{{ .Var.LastLine }}</>\
+				󱫫 {{ .Segments.Executiontime.FormattedMs }}\
+			<background,transparent> </>\
+			{{ if .Segments.Status.Error }}\
+				<p:error,transparent>{{ .Var.Error }} {{ .Segments.Status.String }}</>\
+			{{ else }}\
+				<p:success,transparent>{{ .Var.Success }}</>\
+			{{ end }}\
+		\n\n\
+		{{ end }}\
+		<background,transparent>{{ .Var.FirstLine }}</>\
+			󰥔 {{ now | date "15:04:05" }}\
+		<background,transparent> </>\
+	"""
+
+[[blocks]] # Execution time and status code of the previous command; will be mimicked in the transient prompt
+	alignment = "left"
+	type      = "prompt"
+
+	[[blocks.segments]]
+		type = 'executiontime'
+
+		background = 'p:last-cmd-bg'
+		foreground = 'p:last-cmd'
+		properties = { always_enabled = true }
+		style = 'plain'
+		template = """\
+			{{ if gt .PromptCount 1 }}\
+			<background,transparent>{{ .Var.LastLine }}</>\
+				󱫫 {{ .FormattedMs }}\
+			<background,transparent> </>\
+			{{ end }}\
+		"""
+
+	[[blocks.segments]]
+		type = 'status'
+
+		foreground = 'p:success'
+		foreground_templates = [
+			'{{ if gt .Code 0 }}p:error{{ end }}',
+		]
+		properties = { always_enabled = true }
+		style = 'plain'
+		template = """\
+			{{ if gt .PromptCount 1 }}\
+			{{ if .Error }}\
+				{{ .Var.Error }} {{ .String }}\
+			{{ else }}\
+				{{ .Var.Success }}\
+			{{ end }}\
+			\n\
+			{{ end }}\
+		"""
+
+[[blocks]] # Additional information about the current working directory; doesn't use powerline boxes to avoid visual clutter
+	alignment = 'left'
+	newline   = true
+	type      = 'prompt'
+
+	# [[blocks.segments]]
+	# 	type = 'sysinfo'
+
+	# 	background = 'transparent'
+	# 	foreground = 'p:accent_text'
+	# 	style      = 'plain'
+	# 	template   = '   <p:secondary> {{ printf "%.1f" (divf (float64 (sub .PhysicalTotalMemory .PhysicalFreeMemory)) 1073741824) }}/{{ printf "%.1f" (divf .PhysicalTotalMemory 1073741824.0) }}GB</>'
+
+	# 	[blocks.segments.properties]
+	# 		precision = 2
+
+	[[blocks.segments]]
+		type = 'text'
+
+		style = 'plain'
+		template = """{{ .Var.MiddleLine }}\
+			{{ $parts := slice (.Segments.Path.Location | osClean | replace .Env.GitBaseDirectory "" | splitList "\\\\") 0 3 }}\
+			{{ $provider := index $parts 0 }}\
+			{{ $user := index $parts 1 }}\
+			{{ $repository := index $parts 2 }}\
+			{{ $url := "" }}\
+			{{ if regexMatch "^GitHub" $provider }}\
+				 {{ $url = "https://github.com" }}\
+			{{ else if regexMatch "^GitLab" $provider }}\
+				 {{ $url = "https://gitlab.com" }}\
+			{{ else if regexMatch "^Bitbucket" $provider }}\
+				 {{ $url = "https://bitbucket.org" }}\
+			{{ else if regexMatch "^Azure" $provider }}\
+				 {{ $url = "https://dev.azure.com" }}\
+			{{ end }}\
+			{{ url $user (printf "%s/%s" $url $user) }} \
+			󰳏 {{ url $repository (printf "%s/%s/%s" $url $user $repository) }} \
+		"""
+
+		include_folders = [
+			'<<gitBaseDirectory>>(Azure|BitBucket|GitHub|GitLab)/.*/.*',
+		]
+
+		# [[blocks.segments]]
+		# 	type = "project"
+
+		# 	style    = "plain"
+		# 	template = " {{ if .Error }}{{ .Error }}{{ else }}{{ if .Name }}{{ .Name }}{{ end }}{{ if .Version }} ({{.Version}}){{ end }} {{ end }} "
+
+	[[blocks.segments]]
+		type = 'dotnet'
+
+		foreground = 'p:dotnet'
+		style      = 'plain'
+		template   = ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+
+	[[blocks.segments]]
+		type = 'go'
+
+		foreground = 'p:golang'
+		foreground_templates = [
+			'{{ if .Error }}p:golang-error{{ end }}',
+		]
+		style = 'plain'
+		template = ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+
+	[[blocks.segments]]
+		type = 'node'
+
+		foreground = 'p:node'
+		style      = 'plain'
+		# In Cascadia Code it's  and in the Nerd Font it's 
+		template = ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+
+	[[blocks.segments]]
+		type = 'python'
+
+		foreground = 'p:python'
+		style      = 'plain'
+		template   = ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ if .Venv }} ({{ .Venv }}){{ end }}{{ end }}'
+
+		[blocks.segments.properties]
+			display_mode = 'context'
+
+	[[blocks.segments]]
+		type = 'rust'
+
+		foreground = 'p:rust'
+		style      = 'plain'
+		template   = ' {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }}'
+
+	[[blocks.segments]]
+		type = 'text'
+
+		background = 'transparent'
+		foreground = 'p:pipe'
+		style      = 'plain'
+		template   = "\n{{ .Var.FirstLine }}"
+
+	[[blocks.segments]]
+		type = 'os'
+
+		background      = 'p:os-bg'
+		foreground      = 'p:os'
+		leading_diamond = ''
+		style           = 'diamond'
+		template        = '{{ if .WSL }}WSL at {{ end }}{{.Icon}} '
+
+		[blocks.segments.properties]
+			cache_duration = 'none'
+			linux          = ''
+			macos          = ''
+			windows        = ''
+
+	[[blocks.segments]]
+		type = 'shell'
+
+		background = 'p:shell-bg'
+		foreground = 'p:shell'
+		style      = 'plain'
+		template   = '{{ .Name }} '
+
+	[[blocks.segments]]
+		type = 'root'
+
+		background = 'p:root-bg'
+		foreground = 'p:root'
+		style      = 'plain'
+		template   = '<parentBackground></>  '
+
+	[[blocks.segments]]
+		type = 'path'
+
+		background       = 'p:path-bg'
+		foreground       = 'p:path'
+		leading_diamond  = '<parentBackground> </>'
+		style            = 'diamond'
+		template         = ' {{ path .Path .Location }}'
+		trailing_diamond = ''
+
+		[blocks.segments.properties]
+			folder_icon           = ' '
+			folder_separator_icon = ' <transparent></> '
+			home_icon             = '󰋞'
+			style                 = 'folder'
+
+			[blocks.segments.properties.mapped_locations]
+				'{{ .Env.GitBaseDirectory }}Azure/*'     = ''
+				'{{ .Env.GitBaseDirectory }}Bitbucket/*' = ''
+				'{{ .Env.GitBaseDirectory }}GitHub/*'    = ''
+				'{{ .Env.GitBaseDirectory }}GitLab/*'    = ''
+
+	[[blocks.segments]]
+		type = 'git'
+
+		background = 'p:git-bg'
+		background_templates = [
+			'{{ if or (.Working.Changed) (.Staging.Changed) }}#FFEB95{{ end }}',
+			'{{ if and (gt .Ahead 0) (gt .Behind 0) }}#C5E478{{ end }}',
+			'{{ if gt .Ahead 0 }}#C792EA{{ end }}',
+			'{{ if gt .Behind 0 }}#C792EA{{ end }}',
+		]
+		foreground = 'p:git'
+		leading_diamond = ' '
+		style = 'diamond'
+		template = """\
+			{{ .HEAD }}\
+			{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}\
+			{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}\
+			{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}\
+			{{ if .Staging.Changed }}<#EF5350>  {{ .Staging.String }}</>{{ end }}\
+		"""
+		trailing_diamond = ''
+
+		[blocks.segments.properties]
+			branch_icon     = ' '
+			cache_duration  = 'none'
+			fetch_bare_info = true
+			fetch_status    = true
+
+[[blocks]] # The actual prompt line for user input
+	alignment = 'left'
+	newline   = true
+	type      = 'prompt'
+
+	[[blocks.segments]]
+		type = 'text'
+
+		foreground = 'p:pipe'
+		style      = 'plain'
+		template   = '{{ .Var.LastLine }}󰐍'

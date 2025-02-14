@@ -11,14 +11,12 @@ Set-StrictMode -Version Latest
 $env:GIT_REDIRECT_STDERR = '2>&1'
 
 Import-Module totkeks.GitManagement
-Set-GitBaseDirectory "<<gitBaseDirectory>>"
-Import-Module Terminal-Icons
+Set-GitBaseDirectory 'e:/'
 
 # Load submodules
 Get-ChildItem (Join-Path $PSScriptRoot Profile) *.ps1 | ForEach-Object { . $_.FullName }
 
 Write-Greeting
 
-# Setup prompt
 $env:GitBaseDirectory = Get-GitBaseDirectory
-oh-my-posh init pwsh --config ~/.totkeks.omp.toml | Invoke-Expression
+oh-my-posh init pwsh --config ~/.config/omp/totkeks.toml | Invoke-Expression
